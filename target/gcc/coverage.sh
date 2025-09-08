@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-# 接受工作目录参数
+# Accept working directory parameter
 WORK_DIR="$1"
 
 if [ -z "$WORK_DIR" ]; then
@@ -18,48 +18,48 @@ get_project_root() {
 
 PROJECT_ROOT="$(get_project_root)"
 
-# 获取GCC相关路径
+# Get GCC related paths
 GCOV_PATH="${PROJECT_ROOT}/target/gcc/GCC-13-COVERAGE/bin/gcov"
 
-# 检查gcov工具是否存在
+# Check if gcov tool exists
 if [ ! -f "$GCOV_PATH" ]; then
     echo "Error: gcov tool not found at $GCOV_PATH"
     exit 1
 fi
 
-# 使用全局GCC构建目录收集编译器覆盖率数据
+# Use global GCC build directory to collect compiler coverage data
 COVERAGE_DIR="${PROJECT_ROOT}/target/gcc/gcc-coverage-build/gcc"
 
-# 检查覆盖率目录是否存在
+# Check if coverage directory exists
 if [ ! -d "$COVERAGE_DIR" ]; then
     echo "0"
     exit 1
 fi
 
-# 进入工作目录的覆盖率目录
+# Enter coverage directory in working directory
 cd "$COVERAGE_DIR"
 
 
-# 运行lcov命令收集覆盖率数据
+# Run lcov command to collect coverage data
 lcov --capture --directory . --output-file coverage.info --gcov-tool "$GCOV_PATH" >/dev/null 2>&1
 
-# 检查是否成功生成覆盖率信息
+# Check if coverage information was successfully generated
 if [ ! -f "coverage.info" ] || [ ! -s "coverage.info" ]; then
     echo "0"
     exit 1
 fi
 
-# 生成覆盖率摘要
+# Generate coverage summary
 COVERAGE_SUMMARY=$(lcov --summary coverage.info 2>/dev/null)
 
-# 从摘要中提取覆盖的行数
+# Extract covered lines from summary
 COVERED_LINES=$(echo "$COVERAGE_SUMMARY" | grep "lines......:" | sed 's/.*(\([0-9]*\).*/\1/')
 
-# 如果没有找到覆盖行数，默认为0
+# If no covered lines found, default to 0
 if [ -z "$COVERED_LINES" ]; then
     COVERED_LINES=0
 fi
 
-# 只输出覆盖的行数
+# Only output covered lines
 echo "${COVERED_LINES}"
 

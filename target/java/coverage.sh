@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-# 接受工作目录参数
+# Accept working directory parameter
 WORK_DIR="$1"
 
 if [ -z "$WORK_DIR" ]; then
@@ -37,5 +37,5 @@ java -jar "$JACOCLI" report \
 
 COVERED_LINES=$(xmllint --xpath 'string(/report/counter[@type="LINE"]/@covered)' "$XML_REPORT")
 
-# 只输出覆盖的行数
+# Only output covered lines
 echo "${COVERED_LINES}"

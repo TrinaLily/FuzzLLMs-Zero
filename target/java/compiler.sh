@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 接受工作目录参数
+# Accept working directory parameter
 WORK_DIR="$1"
 SOURCE_FILE="$2"
 
@@ -22,11 +22,11 @@ export PATH="$JAVA_HOME/bin:$PATH"
 
 JACOCO_AGENT="${PROJECT_ROOT}/target/java/jacocoagent.jar"
 
-# 将覆盖率文件放到工作目录中
+# Put coverage files in working directory
 DEST_FILE="${WORK_DIR}/coverage/jacoco.exec"
 APPEND="true"
 
-# 确保覆盖率目录存在，但不删除累积的覆盖率数据
+# Ensure coverage directory exists, but do not delete accumulated coverage data
 mkdir -p "$(dirname "$DEST_FILE")"
 
 exec java \

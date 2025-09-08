@@ -18,18 +18,17 @@ class LLMGenerator:
         self.gpu_devices = gpu_devices
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         
-        # 确保tokenizer有pad_token
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
         
-        # 设置CUDA可见设备，统一处理单GPU和多GPU情况
+        # Set CUDA visible devices to handle both single and multi-GPU scenarios uniformly
         
         os.environ["CUDA_VISIBLE_DEVICES"] = ",".join(map(str, gpu_devices))
-        self.device = "cuda:0"  # 在可见设备中，第一个设备总是0
+        self.device = "cuda:0"  # In visible devices, the first device is always 0
         
         self.model = AutoModelForCausalLM.from_pretrained(
             model_name,
-            device_map="auto",  # 自动分布到可见的GPU
+            device_map="auto",  # Automatically distribute to visible GPUs
             torch_dtype=torch.bfloat16,
         ).eval()
         
@@ -38,7 +37,7 @@ class LLMGenerator:
         self.batch_size = batch_size
     
     def extract_code(self, completion):
-        """提取代码"""
+        """Extract code from completion"""
         match = re.search(r"<code>(.+?)</code>", completion, flags=re.DOTALL)
         if match:
             code = match.group(1).strip()
@@ -47,7 +46,7 @@ class LLMGenerator:
         return None
 
     def generate(self, prompt: str) -> str:
-        # 让tokenizer自动处理padding和attention_mask
+        # Let tokenizer automatically handle padding and attention_mask
         inputs = self.tokenizer(prompt, return_tensors="pt", padding=True, truncation=True).to(self.device)
         
         with torch.no_grad():

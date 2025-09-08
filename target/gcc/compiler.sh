@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 接受工作目录参数
+# Accept working directory parameter
 WORK_DIR="$1"
 SOURCE_FILE="$2"
 
@@ -17,10 +17,10 @@ get_project_root() {
 
 PROJECT_ROOT="$(get_project_root)"
 
-# 获取GCC编译器路径
+# Get GCC compiler path
 GCC_PATH="${PROJECT_ROOT}/target/gcc/GCC-13-COVERAGE/bin/gcc"
 
-# 检查GCC是否存在
+# Check if GCC exists
 if [ ! -f "$GCC_PATH" ]; then
     echo "Error: GCC compiler not found at $GCC_PATH"
     echo "Please run the build script first: bash build_script/gcc_build.sh"
@@ -28,12 +28,12 @@ if [ ! -f "$GCC_PATH" ]; then
 fi
 
 
-# 生成输出文件名（在覆盖率目录中）
+# Generate output filename (in coverage directory)
 OUTPUT_FILE="${WORK_DIR}/coverage"
 
-# 编译C代码
-# 使用C17标准，启用覆盖率检测
-# 使用-fprofile-dir指定覆盖率文件(.gcno, .gcda)的输出目录
+# Compile C code
+# Use C17 standard, enable coverage detection
+# Use -fprofile-dir to specify output directory for coverage files (.gcno, .gcda)
 "$GCC_PATH" \
     -x c \
     -std=c17 \
@@ -41,5 +41,5 @@ OUTPUT_FILE="${WORK_DIR}/coverage"
     "$SOURCE_FILE" \
     -o "$OUTPUT_FILE"
 
-# 返回编译结果
+# Return compilation result
 exit $?
