@@ -79,6 +79,8 @@ If you want to add support for other compilers, you can extend the framework by 
    - `target/your_compiler/compile.sh` - Compilation script
    - `target/your_compiler/coverage.sh` - Coverage collection script
 
+3. **Update COMPILER_INFO in fuzz.py** (see Configuration section below)
+
 ### Script Requirements
 
 #### `compile.sh` Script
@@ -119,17 +121,19 @@ For reference, see the existing implementations:
 
 ### Configuration
 
-After adding your compiler scripts, create a corresponding config file:
-```yaml
-# config/your_compiler_config.yaml
-target: your_compiler
-work_dir: your_compiler_output
-model_name: "your_model_name"
-temperature: 1.0
-max_length: 512
-batch_size: 8
-time_budget: 7200
-coverage_interval_seconds: 3600
+After adding your compiler scripts, you need to update the `COMPILER_INFO` in `fuzz.py` and create a corresponding config file:
+
+Add your compiler information to the `COMPILER_INFO` dictionary:
+```python
+COMPILER_INFO = {
+    "java": {"ext": ".java", "lang": "java"},
+    "gcc": {"ext": ".c", "lang": "c"},
+    "clang": {"ext": ".c", "lang": "c"},
+    "g++": {"ext": ".cpp", "lang": "cpp"},
+    "go": {"ext": ".go", "lang": "go"},
+    "jerryscript": {"ext": ".js", "lang": "javascript"},
+    "your_compiler": {"ext": ".your_ext", "lang": "your_language"}  # Add your compiler here
+}
 ```
 
 
