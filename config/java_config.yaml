@@ -1,0 +1,8 @@
+target: java
+work_dir: "./output/24h_CodeLlama-7b-Instruct-hf_result_5"
+model_name: "/disk2/model_checkpoints_share/codellama/CodeLlama-7b-Instruct-hf/"
+temperature: 1.0
+max_length: 1024
+batch_size: 16
+time_budget: 86400
+coverage_interval_seconds: 3600

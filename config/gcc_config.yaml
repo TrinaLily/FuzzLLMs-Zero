@@ -1,0 +1,8 @@
+target: gcc
+work_dir: "./gcc_output/test"
+model_name: "/disk2/model_checkpoints_share/Qwen2.5-Coder-3B-Instruct"
+temperature: 1.0
+max_length: 1024
+batch_size: 16
+time_budget: 300
+coverage_interval_seconds: 30
