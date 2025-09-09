@@ -4,7 +4,6 @@
 apt-get install lcov flex
 
 cd ../target/g++/
-# cd ../target/gcc/
 git clone git://gcc.gnu.org/git/gcc.git ./gcc-13
 cd ./gcc-13/
 git checkout releases/gcc-13.1.0

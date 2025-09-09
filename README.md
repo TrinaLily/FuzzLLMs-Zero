@@ -26,7 +26,9 @@ After installing the virtual environment and dependencies, you need to build the
 
 ```bash
 # Build GCC compiler with coverage support
-bash build_script/gcc_build.sh
+cd FuzzLLMs-Zero/build_script
+chmod +x gcc_build.sh
+./gcc_build.sh
 ```
 
 ### Configure Your Experiment
