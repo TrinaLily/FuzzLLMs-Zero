@@ -123,6 +123,7 @@ For reference, see the existing implementations:
 
 After adding your compiler scripts, you need to update the `COMPILER_INFO` in `fuzz.py` and create a corresponding config file:
 
+
 Add your compiler information to the `COMPILER_INFO` dictionary:
 ```python
 COMPILER_INFO = {
