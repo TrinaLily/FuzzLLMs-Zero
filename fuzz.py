@@ -57,7 +57,7 @@ def clean_compiler_coverage(target_compiler):
             
             if coverage_dir.exists():
                 # Use find command to clean .gcda and coverage.info files
-                cmd = f"find {coverage_dir} \\( -name \"*.gcda\" -o -name \"coverage.info\" \\) -type f -delete"
+                cmd = ["find", str(coverage_dir), "(", "-name", "*.gcda", "-o", "-name", "coverage.info", ")", "-type", "f", "-delete"]
                 returncode, stdout, stderr = run_cmd(cmd, project_root)
                 
                 if returncode == 0:
