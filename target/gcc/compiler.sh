@@ -18,23 +18,24 @@ get_project_root() {
 PROJECT_ROOT="$(get_project_root)"
 
 # Get GCC compiler path
-GCC_PATH="${PROJECT_ROOT}/target/gcc/GCC-13-COVERAGE/bin/gcc"
+Compiler_PATH="${PROJECT_ROOT}/target/gcc/GCC-13-COVERAGE/bin/gcc"
 
 # Check if GCC exists
-if [ ! -f "$GCC_PATH" ]; then
-    echo "Error: GCC compiler not found at $GCC_PATH"
+if [ ! -f "$Compiler_PATH" ]; then
+    echo "Error: GCC compiler not found at $Compiler_PATH"
     echo "Please run the build script first: bash build_script/gcc_build.sh"
     exit 1
 fi
 
 
 # Generate output filename (in coverage directory)
-OUTPUT_FILE="${WORK_DIR}/coverage"
+SOURCE_BASENAME=$(basename "$SOURCE_FILE" .c)
+OUTPUT_FILE="${WORK_DIR}/coverage/${SOURCE_BASENAME}"
 
 # Compile C code
 # Use C17 standard, enable coverage detection
 # Use -fprofile-dir to specify output directory for coverage files (.gcno, .gcda)
-"$GCC_PATH" \
+"$Compiler_PATH" \
     -x c \
     -std=c17 \
     --coverage \
